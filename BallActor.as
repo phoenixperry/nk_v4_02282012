@@ -19,8 +19,8 @@ package
 	public class BallActor extends Actor 
 	{
 		private static const BALL_DIAMETER:int = 12; 
-		var ballSprite:Sprite; 
-		var ballBody:b2Body; 
+		private var ballSprite:Sprite; 
+		private var ballBody:b2Body; 
 		
 		public function BallActor(parent:DisplayObjectContainer, location:Point, initVel:Point) 
 		{	

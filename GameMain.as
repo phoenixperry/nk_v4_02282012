@@ -15,6 +15,7 @@ package
 	import starling.events.Touch;
 	import starling.events.TouchEvent;
 	import starling.utils.Stats;
+	import starling.events.TouchPhase; 
 	
 	import flash.geom.Point; 
 	
@@ -22,13 +23,15 @@ package
 	{
 		private var level1:LevelOne; 
 		private var k:Kinect;
-		private var useKinect:Boolean = false ; 
+		private var useKinect:Boolean = true ; 
 		private var _mouseX:Number = 0;
 		private var _mouseY:Number = 0;
+			
 	
 		public static var RATIO:Number = 30;
 		private static var _world:b2World; 
-	
+		public static const GAME_WIDTH = 1024; 
+		public static const GAME_HEIGHT = 768;  
 		public function GameMain() 
 		{
 			addEventListener(Event.ADDED_TO_STAGE, onAdded);
@@ -101,6 +104,10 @@ package
 			BalloonActor.ypos = _mouseY;
 		}
 		
+		 private function fname():void
+		{
+			
+		}
 	
 	}
 }

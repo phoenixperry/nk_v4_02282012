@@ -2,13 +2,12 @@ package
 {
 	import flash.display3D.textures.Texture;
 	import flash.geom.Point;
+	import flash.utils.Dictionary;
 	
 	import starling.display.Image;
 	import starling.display.Sprite;
 	import starling.events.EnterFrameEvent;
-	import starling.events.Event; 
-	
-	import flash.utils.Dictionary;
+	import starling.events.Event;
 	
 	
 	public class LevelOne extends LevelGen
@@ -24,10 +23,14 @@ package
 			
 		private var w:Number = 1024; 
 		private var h:Number = 768; 
-		private var b:Number=768; 
+		private var b:Number=1024; 
 		private var s:Number=20; 
-		private var vert:Boolean = true; 
+		private var vert:Boolean = false; 
 		private var items:Array; 
+		private var SIDE_WALL_THICKNESS:Number = 1; 
+		private var SIDE_WALL_HEIGHT:Number = GameMain.GAME_HEIGHT; 
+		private var LEFT_WALL_POSITION:Point; 
+		private var RIGHT_WALL_POSITION:Point;  
 		
 		private var ball:BalloonActor; 
 		
@@ -35,17 +38,17 @@ package
 		public function LevelOne()
 		{
 			super();
-			addEventListener(Event.ADDED_TO_STAGE, loadLevel)
+			addEventListener(Event.ADDED_TO_STAGE, loadl)
 			items = []; 
 			
 			
 		}
-		 protected function loadLevel(e:Event):void { 
+		  	protected function loadl(e:Event):void { 
 			removeEventListener(Event.ADDED_TO_STAGE, loadLevel); 
 			
 			//parallax
-			para = new Parallex(para1, para2, w, h, b, s, vert); 
-			addChild(para); 
+//			para = new Parallex(para1, para2, w, h, b, s, vert); 
+//			addChild(para); 
 			addEventListener(Event.ENTER_FRAME, update); 
 			
 			//balloon
@@ -54,21 +57,59 @@ package
 			items.push(ball); 
 			for (var j:int = 0; j < 20; j++) 
 			{
-				var xp = 200 + (j*20); 	
+				var xp:Number = 200 + (j*20); 	
 				var foo2:BallActor = new BallActor(this, new Point(xp,200), new Point(10,-3));
 				addChild(foo2); 
 				items.push(foo2); 
 			}
-//			
+			
+			makeAWall();
 			}
 			
 
 		private function update(e:Event):void { 
-			para.update(); 
+		//	para.update(); 
 			for each(var actor:Actor in items) {
 				actor.updateNow(); 
 			}
 		}
+		
+		private function makeAWall():void {
+			LEFT_WALL_POSITION = new Point(0,0); 
+			RIGHT_WALL_POSITION = new Point(GameMain.GAME_WIDTH, 0); 
+			var BTM_WALL_POSITION:Point = new Point(0, GameMain.GAME_HEIGHT); 
+			
+			var wallShapeCoords:Array = new Array(); 
+			wallShapeCoords.push(
+					new Array( 
+						new Point(0,0), 
+						new Point(SIDE_WALL_THICKNESS, 0),
+						new Point(SIDE_WALL_THICKNESS, SIDE_WALL_HEIGHT),
+						new Point(0, SIDE_WALL_HEIGHT)
+						)
+					); 
+			var floorCoords:Array = new Array(); 
+			floorCoords.push(
+					new Array(
+						new Point(0, 0), 
+						new Point(GameMain.GAME_WIDTH, 0), 
+						
+						new Point(GameMain.GAME_WIDTH, SIDE_WALL_THICKNESS), 
+						new Point(0, SIDE_WALL_THICKNESS)
+						)
+					); 
+			
+			//add left wall 
+			var leftWall:ArbiStaticActor = new ArbiStaticActor(this, LEFT_WALL_POSITION, wallShapeCoords); 
+			items.push(leftWall); 
+		
+			var rightWall:ArbiStaticActor = new ArbiStaticActor(this, RIGHT_WALL_POSITION, wallShapeCoords); 
+			items.push(rightWall); 
+		
+			var btmWall:ArbiStaticActor = new ArbiStaticActor(this, BTM_WALL_POSITION, floorCoords); 
+			
+		}
+		
 		
 //		private function remove():void
 //			for(i:Number =0; i < items.length; i++)

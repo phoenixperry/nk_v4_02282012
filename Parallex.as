@@ -56,7 +56,6 @@ package
 				container.addChild(_img1); 
 				container.addChild(_img2); 
 			}
-		
 			 addChild(container); 
 
 		}
