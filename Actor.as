@@ -18,6 +18,7 @@ package
 		{
 			_body = myBody; 
 			_costume = myCosutme; 
+			_body.SetUserData(this); 
 			if ( _body.GetType() == b2Body.b2_dynamicBody)
 				
 			{	
@@ -37,13 +38,6 @@ package
 			
 		}
 		
-		public function destroy():void 
-		{
-			//remove the actor from the world
-			trace("offScreen"); 
-			
-			
-		}
 		private function updateMyLook():void 
 		{
 			_costume.x = _body.GetPosition().x * GameMain.RATIO; 
@@ -55,10 +49,26 @@ package
 				//parent.removeChild(this); 
 				destroy(); 
 			}
- 
-			
+ 		}
+		
+		
+		protected function hitByActor(actor:Actor):void
+		{
+			// OVERRIDE IN EXTENDED ACTOR CLASS.
 		}
 		
+		
+		protected function destroy():void { 
+			cleanUpBeforeRemoving(); 
+		}
+		
+		protected function cleanUpBeforeRemoving():void { 
+			//remove the costume 
+//			_costume.parent.removeChild(_costume); 
+			GameMain.world.DestroyBody(_body);
+			_costume.removeEventListeners(); 
+			
+		}
 		
 		
 	}

@@ -80,12 +80,12 @@ package
 			//first create the costume 
 			var bframes:Vector.<Texture> = balloonAtlas.getTextures("balloon"); 
 			name = "balloon"; 
-			 bMovie= new MovieClip(bframes, 30); 
+			 bMovie= new MovieClip(bframes,3); 
 			 
 			Starling.juggler.add(bMovie); 
 			
-			particles = new ParticleDesignerPS(XML(new ParticleXML()),
-				Texture.fromBitmap(new ParticleTexture())); 
+//			particles = new ParticleDesignerPS(XML(new ParticleXML()),
+//				Texture.fromBitmap(new ParticleTexture())); 
 		
 		
 			
@@ -138,17 +138,17 @@ package
 
 	public function balloonAdded(e:Event):void { 
 	
-		particles.start(); 
-		particles.emitterX = bMovie.x +93; 
-		particles.emitterY = bMovie.y + 140; 
-		_particleMouseX = 	particles.emitterX; 
-		py = 	particles.emitterY;
-		
+//		particles.start(); 
+//		particles.emitterX = bMovie.x +93; 
+//		particles.emitterY = bMovie.y + 140; 
+//		_particleMouseX = 	particles.emitterX; 
+//		py = 	particles.emitterY;
+//		
 		//now add it to juggler
-		Starling.juggler.add(particles); 
+	//	Starling.juggler.add(particles); 
 
 
-		addChild(particles); 
+	//	addChild(particles); 
 		addChild(bMovie); 		
 	}
 		
@@ -229,7 +229,7 @@ package
 				var ballCurrent:b2Vec2 = new b2Vec2(_BallBody.GetPosition().x, _BallBody.GetPosition().y);
 				trace(_BallBody.GetPosition().x, _BallBody.GetPosition().y); 
 				var diff:b2Vec2 = new b2Vec2((ballTarget.x-ballCurrent.x), (ballTarget.y-ballCurrent.y)); 
-				//iff.Normalize(); 
+				//diff.Normalize(); 
 				diff.Multiply(12);
 				_BallBody.SetLinearVelocity(diff); 
 				_BallBody.SetAngularVelocity(0); 
@@ -238,8 +238,8 @@ package
 			// set the rotation of the sprite
 			bMovie.x = _BallBody.GetPosition().x * GameMain.RATIO; 
 			bMovie.y = _BallBody.GetPosition().y * GameMain.RATIO;  
-			particles.x = (_BallBody.GetPosition().x * GameMain.RATIO); 
-			particles.y = (_BallBody.GetPosition().y* GameMain.RATIO)+10; 
+			//particles.x = (_BallBody.GetPosition().x * GameMain.RATIO); 
+			//particles.y = (_BallBody.GetPosition().y* GameMain.RATIO)+10; 
 
 			trace(_xpos, _ypos); 
 			
