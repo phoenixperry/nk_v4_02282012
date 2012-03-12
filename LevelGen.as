@@ -1,14 +1,16 @@
 package 
 {
-	import starling.display.Sprite; 
+	import flash.display.DisplayObjectContainer;
+	
+	import starling.display.Sprite;
 
 	public class LevelGen extends Sprite
 	{
-		protected var _actors:Array; 
+		protected var items:Array; 
 		
 		public function LevelGen()
 		{
-			_actors = []; 
+			items = []; 
 			//update level 
 			//make an array for all objects 
 			//remove level 
@@ -23,11 +25,12 @@ package
 			level.removeEventListeners(); 
 	
 			//remove all the actors of the level. 
-			for (var i:int = 0; i < _actors.length; i++) 
+			for (var i:int = 0; i < items.length; i++) 
 			{
 				if(level.numChildren < 0) {
-					removeChild(_actors[i]); 
-					//_actors[i].removeEventListeners();
+					//DisplayObject(items[i]).removeEventListeners(); 
+					parent.removeChild(items[i]); 
+					
 				}
 			}
 		}

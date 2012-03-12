@@ -7,7 +7,7 @@ package
 	import flash.display.Sprite;
 	
 	import starling.core.Starling; 
-	[SWF(width="1024", height="768", framerate="60", backgroundColor="0x1E1E1E")]
+	[SWF(width="1024", height="768", frameRate="60", backgroundColor="#ffffff")]
 	public class nk_v4_02282012 extends Sprite
 	
 	{
