@@ -59,7 +59,7 @@ package
 		private static var _xpos:Number; 
 		private static var _ypos:Number; 
 		
-
+		private var _beenHit:Boolean;
 		
 		public function BalloonActor()
 		{
@@ -97,7 +97,7 @@ package
 				
 				[
 					// density, friction, restitution
-					1, 0.2,0.2,
+					0, 0.0,0.0,
 					// categoryBits, maskBits, groupIndex, isSensor
 					1, 65535, 0, false,
 					'POLYGON',
@@ -245,8 +245,23 @@ package
 			
 		}		
 		
-	
-	
+		public override function hitByActor(actor:Actor):void {
+			//not in hit state
+			if (! _beenHit)
+			{	
+				_beenHit = true; 
+				setBalloonState(); 
+				//dispatchEvent(new PegEvent(PegEvent.PEG_LIT_UP)); 
+			}
+		}
+		
+		private function setBalloonState():void
+		{
+			//do animation here 
+			trace("balloon hit kitty");
+			
+		}
+		
 //			
 			
 		}

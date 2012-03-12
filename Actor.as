@@ -53,7 +53,7 @@ package
  		}
 		
 		
-		protected function hitByActor(actor:Actor):void
+		public function hitByActor(actor:Actor):void
 		{
 			// OVERRIDE IN EXTENDED ACTOR CLASS.
 		}
@@ -70,7 +70,7 @@ package
 			_costume.removeEventListeners(); 
 			
 		}
-		
+
 		
 	}
 	

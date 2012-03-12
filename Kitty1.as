@@ -40,6 +40,9 @@ package
 		[Embed(source="./assets/level1/sprites/fullSheet/fullSheet.xml",  mimeType="application/octet-stream")]
 		public var kittyXML:Class;
 		
+		private var _beenHit:Boolean = false;
+		
+		
 		public function Kitty1() 
 		{
 			addEventListener(Event.ADDED_TO_STAGE, kitty1Added); 
@@ -66,7 +69,7 @@ package
 			
 			[
 				// density, friction, restitution
-				2, 0, 0,
+				1, 0.1, 0,
 				// categoryBits, maskBits, groupIndex, isSensor
 				1, 65535, 0, false,
 				'POLYGON',
@@ -173,6 +176,19 @@ package
 
 		}		
 		
+		public override function hitByActor(actor:Actor):void {
+			//not in hit state
+			if (! _beenHit)
+			{	
+				_beenHit = true; 
+				setKittyState(); 
+				//dispatchEvent(new PegEvent(PegEvent.PEG_LIT_UP)); 
+			}
+		}
+		private function setKittyState():void { 
+			//do animation for hit here. 
+			trace("kitty hit by balloon"); 
+		}
 //last two 	
 	}
 }	

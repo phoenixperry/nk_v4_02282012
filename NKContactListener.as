@@ -24,17 +24,15 @@ package
 			
 			//ballActor and PegActor contacted 
 			if (actorA is Kitty1 && actorB is BalloonActor) {
-				
-				//contact.GetFixtureA().GetBody().GetUserData().contact = true;	
-				trace("balloonHitKitty");
-				
-				//gonna need to be a boolean for if he's been hit. 
-				//you should be able to set this but I can't 
-				//contact.GetFixtureA().GetBody().GetUserData().contact = true;
+		
+				trace("kittyhitballoon");
+				actorA.hitByActor(actorB);	
 			}
 			else if (actorB is Kitty1 && actorA is BalloonActor) {
 				//contact.GetFixtureB().GetBody().GetUserData().contact = true;
-				trace("kittyhitballoon"); 
+			 
+				actorB.hitByActor(actorA);
+				trace("balloonHitKitty");
 			} 		
 			
 		}
