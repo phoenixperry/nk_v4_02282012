@@ -27,7 +27,6 @@ package
 		private var _mouseX:Number = 0;
 		private var _mouseY:Number = 0;
 			
-	
 		public static var RATIO:Number = 30;
 		private static var _world:b2World; 
 		public static const GAME_WIDTH:Number = 1024; 
@@ -74,7 +73,8 @@ package
 			var allowSleep:Boolean = true; 
 			 _world = new b2World(gravity, allowSleep); 
 			 addEventListener(Event.ENTER_FRAME, updateW); 
-		
+			
+			 GameMain.world.SetContactListener(new NKContactListener());
 			
 		}
 		
@@ -95,7 +95,7 @@ package
 			// get the mouse location related to the stage
 			var touch:Touch = e.getTouch(stage);
 			var pos:Point = touch.getLocation(stage);
-			trace ( touch.phase );
+		//	trace ( touch.phase );
 			// store the mouse coordinates
 			_mouseY = pos.y;
 			_mouseX = pos.x;

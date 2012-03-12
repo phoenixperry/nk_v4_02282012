@@ -20,13 +20,14 @@ package
 		private var para2:Class;
 	
 		private var para:Parallex; 
-			
+		
+		private var kitty:Kitty1; 
 		private var w:Number = 1024; 
 		private var h:Number = 768; 
 		private var b:Number=1024; 
 		private var s:Number=20; 
 		private var vert:Boolean = false; 
-		private var items:Array; 
+		//private var items:Array; 
 		private var SIDE_WALL_THICKNESS:Number = 1; 
 		private var SIDE_WALL_HEIGHT:Number = GameMain.GAME_HEIGHT; 
 		private var LEFT_WALL_POSITION:Point; 
@@ -34,27 +35,24 @@ package
 		
 		private var ball:BalloonActor; 
 		
-		public var foo:BallActor; 
+
 		public function LevelOne()
 		{
 			super();
 			addEventListener(Event.ADDED_TO_STAGE, loadl)
-			items = []; 
+			//items = []; 
 			
 			
 		}
 		  	protected function loadl(e:Event):void { 
 			removeEventListener(Event.ADDED_TO_STAGE, loadLevel); 
 			
-			//parallax
-//			para = new Parallex(para1, para2, w, h, b, s, vert); 
-//			addChild(para); 
+		//	parallax
+			para = new Parallex(para1, para2, w, h, b, s, vert); 
+			addChild(para); 
 			addEventListener(Event.ENTER_FRAME, update); 
 			
-			//balloon
-			ball = new BalloonActor();
-			addChild(ball);
-			items.push(ball); 
+	
 			for (var j:int = 0; j < 20; j++) 
 			{
 				var xp:Number = 200 + (j*20); 	
@@ -63,12 +61,22 @@ package
 				items.push(foo2); 
 			}
 			
+	//		balloon
+			ball = new BalloonActor();
+			addChild(ball);
+
+			
+			kitty = new Kitty1(); 
+			addChild(kitty); 
+		
+			
+			
 			makeAWall();
 			}
 			
 
 		private function update(e:Event):void { 
-		//	para.update(); 
+		para.update(); 
 			for each(var actor:Actor in items) {
 				actor.updateNow(); 
 			}
@@ -111,14 +119,6 @@ package
 		}
 		
 		
-//		private function remove():void
-//			for(i:Number =0; i < items.length; i++)
-//				
-		//Actor(items[i]).destroy(); 
-//		///to add function that removes all items from the array by calling the remove fucntion of actor -- must be added
-		
-		//remove any other items in array
-		//removeChild(para)
-		
+
 	}
 }

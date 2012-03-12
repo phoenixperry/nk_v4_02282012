@@ -15,7 +15,7 @@ package
 	import flash.ui.GameInput;
 	import flash.utils.Dictionary;
 	
-	
+	import starling.core.Starling;
 	import starling.display.Image;
 	import starling.display.MovieClip;
 	import starling.display.Sprite;
@@ -23,8 +23,7 @@ package
 	import starling.extensions.*;
 	import starling.extensions.ParticleDesignerPS;
 	import starling.textures.Texture;
-	import starling.textures.TextureAtlas; 
-	import starling.core.Starling;  
+	import starling.textures.TextureAtlas;  
 	public class BalloonActor extends Actor
 	{
 		
@@ -149,6 +148,7 @@ package
 
 
 	//	addChild(particles); 
+		removeEventListener(Event.ADDED_TO_STAGE, balloonAdded); 
 		addChild(bMovie); 		
 	}
 		
@@ -227,7 +227,7 @@ package
 			if(_xpos > 0 && _xpos <stage.stageWidth) { 
 				var ballTarget:b2Vec2= new b2Vec2(_mouseXWorldPhys, _mouseYWorldPhys); 
 				var ballCurrent:b2Vec2 = new b2Vec2(_BallBody.GetPosition().x, _BallBody.GetPosition().y);
-				trace(_BallBody.GetPosition().x, _BallBody.GetPosition().y); 
+				//trace(_BallBody.GetPosition().x, _BallBody.GetPosition().y); 
 				var diff:b2Vec2 = new b2Vec2((ballTarget.x-ballCurrent.x), (ballTarget.y-ballCurrent.y)); 
 				//diff.Normalize(); 
 				diff.Multiply(12);
@@ -241,7 +241,7 @@ package
 			//particles.x = (_BallBody.GetPosition().x * GameMain.RATIO); 
 			//particles.y = (_BallBody.GetPosition().y* GameMain.RATIO)+10; 
 
-			trace(_xpos, _ypos); 
+			//trace(_xpos, _ypos); 
 			
 		}		
 		

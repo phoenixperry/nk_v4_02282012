@@ -13,9 +13,10 @@ package
 	{
 		protected var _body:b2Body; 
 		protected var _costume:DisplayObject; 
-		
+		protected var items:Array; 
 		public function Actor(myBody:b2Body, myCosutme:DisplayObject) 
-		{
+		{	
+			items= [];
 			_body = myBody; 
 			_costume = myCosutme; 
 			_body.SetUserData(this); 

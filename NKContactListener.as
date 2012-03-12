@@ -11,6 +11,7 @@ package
 		public function NKContactListener() 
 		{
 			super(); 
+			trace(this+" initalized");
 		}
 		/** contact started notify actors involved **/ 
 		override public function BeginContact(contact:b2Contact):void 
@@ -24,23 +25,20 @@ package
 			//ballActor and PegActor contacted 
 			if (actorA is Kitty1 && actorB is BalloonActor) {
 				
-				actorA.hitByActor(actorB); 
+				//contact.GetFixtureA().GetBody().GetUserData().contact = true;	
+				trace("balloonHitKitty");
 				
+				//gonna need to be a boolean for if he's been hit. 
+				//you should be able to set this but I can't 
+				//contact.GetFixtureA().GetBody().GetUserData().contact = true;
 			}
-			else if (actorB is BalloonActor && actorA is Kitty1) {
-				actorB.hitByActor(actorA); 
-			}
-			super.BeginContact(); 
+			else if (actorB is Kitty1 && actorA is BalloonActor) {
+				//contact.GetFixtureB().GetBody().GetUserData().contact = true;
+				trace("kittyhitballoon"); 
+			} 		
 			
 		}
-		
-		/**
-		 * Contact ended.
-		 * */	
-		override public function EndContact(contact:b2Contact):void
-		{
-			super.EndContact(contact);
-		}
-	}
+	
+	
 	}
 }
