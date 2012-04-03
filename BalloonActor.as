@@ -127,12 +127,14 @@ package
 		public static function set ypos(value:Number):void
 		{
 			_ypos = value;
+			trace(_ypos, "I'm _ypos from the class"); 
 		}
 
 	
 		public static function set xpos(value:Number):void
 		{
 			_xpos = value;
+			trace(_xpos, "I'm _xpos from the class");
 		}
 
 	public function balloonAdded(e:Event):void { 
@@ -216,11 +218,12 @@ package
 		
 		override protected function childSpecificUpdating():void
 		{ 
-		addEventListener(Event.ENTER_FRAME, updateMouse); 	
+			addEventListener(Event.ENTER_FRAME, updateMouse); 	
 		}
 		
 		private function updateMouse(e:Event):void
 		{
+			//updateNow(); 
 			_mouseXWorldPhys = (_xpos-bMovie.width/2) / GameMain.RATIO;
 			_mouseYWorldPhys = (_ypos- bMovie.height/4) / GameMain.RATIO;
 			//	trace(_mouseXWorldPhys, _mouseYWorldPhys, xpos, ypos); 

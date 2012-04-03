@@ -165,14 +165,14 @@ package
 		}
 		override protected function childSpecificUpdating():void
 		{ 
-			addEventListener(Event.ENTER_FRAME, updateMouse); 	
+			addEventListener(Event.ENTER_FRAME, updateKitty); 	
 		}
 		
-		private function updateMouse(e:Event):void
+		private function updateKitty(e:Event):void
 		{
 				
 			kMovie.x = _Kitty1Body.GetPosition().x * GameMain.RATIO; 
-			kMovie.y = _Kitty1Body.GetPosition().y * GameMain.RATIO;  
+			kMovie.y = _Kitty1Body.GetPosition().y * GameMain.RATIO; 
 
 		}		
 		

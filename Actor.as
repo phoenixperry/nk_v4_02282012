@@ -13,10 +13,10 @@ package
 	{
 		protected var _body:b2Body; 
 		protected var _costume:DisplayObject; 
-		protected var items:Array; 
+
 		public function Actor(myBody:b2Body, myCosutme:DisplayObject) 
 		{	
-			items= [];
+
 			_body = myBody; 
 			_costume = myCosutme; 
 			_body.SetUserData(this); 
@@ -24,19 +24,21 @@ package
 				
 			{	
 				updateMyLook(); 
-				childSpecificUpdating(); 
+				childSpecificUpdating(); //note if you do this you have to have a listener to trigger motion - just be aware of it 
+				trace("constructor child specific updating ran"); 
+				trace("I should only run once per class setup"); 
 			}
 		}
 		public function updateNow(): void 
 		{
 			updateMyLook(); 
-			childSpecificUpdating(); 	
+			childSpecificUpdating(); 3
 		}
 		
 		protected function childSpecificUpdating():void 
 		{
 			//child specific updating class. 
-			
+			trace("function child specific updating ran"); 
 		}
 		
 		private function updateMyLook():void 
@@ -59,7 +61,7 @@ package
 		}
 		
 		
-		protected function destroy():void { 
+		public function destroy():void { 
 			cleanUpBeforeRemoving(); 
 		}
 		

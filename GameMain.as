@@ -9,6 +9,7 @@ package
 	import Box2D.Dynamics.b2World;
 	
 	import flash.geom.Point;
+	import flash.ui.Keyboard;
 	
 	import starling.core.Starling;
 	import starling.display.Sprite;
@@ -17,13 +18,13 @@ package
 	import starling.events.Touch;
 	import starling.events.TouchEvent;
 	import starling.events.TouchPhase;
-	import starling.utils.Stats; 
+	import starling.utils.Stats;
 	
 	public class GameMain extends Sprite
 	{
 		private var level1:LevelOne; 
 	    private var k:Kinect;
-		private var useKinect:Boolean = false ; 
+		private var useKinect:Boolean = true ; 
 		private var _mouseX:Number = 0;
 		private var _mouseY:Number = 0;
 			
@@ -43,6 +44,7 @@ package
 			setupPhysicsWorld(); 	
 			this.addChild(new Stats());
 			removeEventListener(Event.ADDED_TO_STAGE, onAdded); 
+	
 			if(useKinect) {
 				k = new Kinect(); 
 				addChild(k); 	
@@ -50,7 +52,10 @@ package
 			else{
 				
 				stage.addEventListener(TouchEvent.TOUCH, onTouch);
+				stage.addEventListener(KeyboardEvent.KEY_DOWN, deleteLevel);
 				}
+			
+			 
 		}		
 		
 		private function updateW(e:Event):void
@@ -65,7 +70,13 @@ package
 			_world.ClearForces();
 			
 		}		
-	
+		
+		private function deleteLevel(e:KeyboardEvent):void { 
+			if(e.keyCode == Keyboard.RIGHT){
+			//level1.removeLevel(); 
+			}
+			trace(e);
+		}
 		
 		private function setupPhysicsWorld():void 
 		{
@@ -95,13 +106,15 @@ package
 			// get the mouse location related to the stage
 			var touch:Touch = e.getTouch(stage);
 			var pos:Point = touch.getLocation(stage);
-		//	trace ( touch.phase );
+			trace ( touch.phase );
 			// store the mouse coordinates
 			_mouseY = pos.y;
 			_mouseX = pos.x;
+			trace(pos.x, pos.y); 
+			BalloonActor.xpos = pos.x; 
+			BalloonActor.ypos = pos.y;
+	
 			
-			BalloonActor.xpos = _mouseX; 
-			BalloonActor.ypos = _mouseY;
 		}
 
 	

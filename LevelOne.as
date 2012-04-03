@@ -32,7 +32,7 @@ package
 		private var SIDE_WALL_HEIGHT:Number = GameMain.GAME_HEIGHT; 
 		private var LEFT_WALL_POSITION:Point; 
 		private var RIGHT_WALL_POSITION:Point;  
-		
+		protected var items:Array; 
 		private var ball:BalloonActor; 
 		
 
@@ -40,7 +40,7 @@ package
 		{
 			super();
 			addEventListener(Event.ADDED_TO_STAGE, loadl)
-			//items = []; 
+			items = []; 
 			
 			
 		}
@@ -51,7 +51,7 @@ package
 			para = new Parallex(para1, para2, w, h, b, s, vert); 
 			addChild(para); 
 			addEventListener(Event.ENTER_FRAME, update); 
-			
+		
 	
 			for (var j:int = 0; j < 20; j++) 
 			{
@@ -68,9 +68,8 @@ package
 			
 			kitty = new Kitty1(); 
 			addChild(kitty); 
+			
 		
-			
-			
 			makeAWall();
 			}
 			
@@ -109,16 +108,34 @@ package
 			
 			//add left wall 
 			var leftWall:ArbiStaticActor = new ArbiStaticActor(this, LEFT_WALL_POSITION, wallShapeCoords); 
-			items.push(leftWall); 
+			//items.push(leftWall); 
 		
 			var rightWall:ArbiStaticActor = new ArbiStaticActor(this, RIGHT_WALL_POSITION, wallShapeCoords); 
-			items.push(rightWall); 
+			//items.push(rightWall); 
 		
 			var btmWall:ArbiStaticActor = new ArbiStaticActor(this, BTM_WALL_POSITION, floorCoords); 
 			
 		}
 		
-		
+	override public function removeLevel():void {
+		//this is going to take more than this... research here 
+		//remove all the listeners for a level. 
 
+		//remove all the actors of the level. 
+			
+			ball.destroy(); 
+			
+			if(this.numChildren < 0) {
+				
+				removeChildAt(1); 
+				
+			}
+			removeEventListeners(); 
+			kitty.destroy(); 
+			ball.destroy(); 
+			
+			
+	}	
+	
 	}
 }
