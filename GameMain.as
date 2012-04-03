@@ -4,27 +4,35 @@ package
 	import Box2D.Common.Math.b2Vec2;
 	import Box2D.Dynamics.b2Body;
 	import Box2D.Dynamics.b2BodyDef;
+	import Box2D.Dynamics.b2DebugDraw;
 	import Box2D.Dynamics.b2Fixture;
 	import Box2D.Dynamics.b2FixtureDef;
 	import Box2D.Dynamics.b2World;
 	
+	import flash.display.BitmapData;
+	import flash.display.Sprite;
 	import flash.geom.Point;
 	import flash.ui.Keyboard;
 	
 	import starling.core.Starling;
+	import starling.display.Image;
 	import starling.display.Sprite;
 	import starling.events.Event;
 	import starling.events.KeyboardEvent;
 	import starling.events.Touch;
 	import starling.events.TouchEvent;
 	import starling.events.TouchPhase;
-	import starling.utils.Stats;
+	import starling.textures.Texture;
+	import starling.utils.Stats; 
+
+	
+	
 	
 	public class GameMain extends Sprite
 	{
 		private var level1:LevelOne; 
 	    private var k:Kinect;
-		private var useKinect:Boolean = true ; 
+		private var useKinect:Boolean = false ; 
 		private var _mouseX:Number = 0;
 		private var _mouseY:Number = 0;
 			
@@ -32,12 +40,26 @@ package
 		private static var _world:b2World; 
 		public static const GAME_WIDTH:Number = 1024; 
 		public static const GAME_HEIGHT:Number = 768;  
+		
+		//debug vars
+//		protected var debugImage:Image; 
+//		protected var bmd:BitmapData;  
+//		protected var debugSprite:flash.display.Sprite; 
+//		protected var debugDraw:b2DebugDraw; 
+//		protected var texture:Texture; 
 		public function GameMain() 
 		{
 			addEventListener(Event.ADDED_TO_STAGE, onAdded);
 			level1 = new LevelOne(); 
 			addChild(level1); 
-
+			
+//			//initing box2d debuggger 
+//			bmd = new BitmapData(1024,768, true, 0x0);
+//			debugSprite = new flash.display.Sprite(); 
+//			debugDraw= new b2DebugDraw(); 
+//			texture = Texture.fromBitmapData(bmd); 
+//			debugImage = new Image(texture); 
+			
 		}
 		private function onAdded(e:Event):void
 		{
@@ -54,8 +76,9 @@ package
 				stage.addEventListener(TouchEvent.TOUCH, onTouch);
 				stage.addEventListener(KeyboardEvent.KEY_DOWN, deleteLevel);
 				}
-			
-			 
+			//debug
+			// debugIt();
+		//	 addChild(debugImage); 
 		}		
 		
 		private function updateW(e:Event):void
@@ -68,6 +91,8 @@ package
 			
 			_world.Step(timeStep, velocityIterations, positionIterations);
 			_world.ClearForces();
+			_world.DrawDebugData();
+			//drawDebug();
 			
 		}		
 		
@@ -113,10 +138,54 @@ package
 			trace(pos.x, pos.y); 
 			BalloonActor.xpos = pos.x; 
 			BalloonActor.ypos = pos.y;
+
 	
 			
 		}
+		
+		public function setDebugDraw(debugSprite:flash.display.Sprite):void{
+			
+			var debugDraw:b2DebugDraw = new b2DebugDraw();
+			debugDraw.SetSprite(debugSprite);
+			
+						debugDraw.SetSprite(debugSprite);
+						GameMain.world.SetDebugDraw(debugDraw); 
+						
+						debugDraw.SetDrawScale(GameMain.RATIO);
+						debugDraw.SetLineThickness( 1.0);
+						debugDraw.SetAlpha(1);
+						debugDraw.SetFillAlpha(0.8);
+						debugDraw.SetFlags(b2DebugDraw.e_shapeBit);
 
-	
+			_world.SetDebugDraw(debugDraw);
+			
+		}
+
+//		protected function debugIt():void {
+//			//add all of the debug crap here 
+//			var debugSprite:flash.display.Sprite = new flash.display.Sprite(); 
+//			//addChild(debugSprite);
+//			
+//			
+//			debugDraw.SetSprite(debugSprite);
+//			GameMain.world.SetDebugDraw(debugDraw); 
+//			
+//			debugDraw.SetDrawScale(GameMain.RATIO);
+//			debugDraw.SetLineThickness( 1.0);
+//			debugDraw.SetAlpha(1);
+//			debugDraw.SetFillAlpha(0.8);
+//			debugDraw.SetFlags(b2DebugDraw.e_shapeBit);
+//		}
+//		
+//		protected function drawDebug():void {
+//			
+//			//copy into starling and add it 
+//			
+//			bmd.draw(debugSprite); 
+//			
+//			
+//		}
+		
+		
 	}
 }

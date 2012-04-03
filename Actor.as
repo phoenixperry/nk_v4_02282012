@@ -2,8 +2,13 @@ package
 {
 	import Box2D.Dynamics.b2Body;
 	
+	import flash.display.BitmapData;
+	import flash.display.Sprite;
+	
 	import starling.display.DisplayObject;
-	import starling.display.Sprite; 
+	import starling.display.Image;
+	import starling.display.Sprite;
+	import starling.textures.Texture; 
 
 	/**
 	 * ...
@@ -21,7 +26,7 @@ package
 			_costume = myCosutme; 
 			_body.SetUserData(this); 
 			if ( _body.GetType() == b2Body.b2_dynamicBody)
-				
+		
 			{	
 				updateMyLook(); 
 				childSpecificUpdating(); //note if you do this you have to have a listener to trigger motion - just be aware of it 
@@ -32,7 +37,7 @@ package
 		public function updateNow(): void 
 		{
 			updateMyLook(); 
-			childSpecificUpdating(); 3
+			childSpecificUpdating(); 
 		}
 		
 		protected function childSpecificUpdating():void 
@@ -73,6 +78,9 @@ package
 			
 		}
 
+		
+	
+		
 		
 	}
 	

@@ -91,7 +91,7 @@ package
 
 		
 		_Kitty1Body= createBody("kitty", GameMain.world, b2Body.b2_dynamicBody,kMovie); 
-		
+		_Kitty1Body.SetFixedRotation(true); 
 		super(_Kitty1Body, kMovie); 
 	}
 		

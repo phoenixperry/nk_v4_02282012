@@ -93,11 +93,12 @@ package
 			dict = new Dictionary();
 			
 			
+			
 			dict["mouse"] = [
 				
 				[
 					// density, friction, restitution
-					0, 0.0,0.0,
+					1, 0, 0,
 					// categoryBits, maskBits, groupIndex, isSensor
 					1, 65535, 0, false,
 					'POLYGON',
@@ -105,11 +106,12 @@ package
 					// vertexes of decomposed polygons
 					[
 						
-						[   new b2Vec2(-4/GameMain.RATIO, 55/GameMain.RATIO)  ,  new b2Vec2(14/GameMain.RATIO, 13/GameMain.RATIO)  ,  new b2Vec2(52/GameMain.RATIO, -3/GameMain.RATIO)  ,  new b2Vec2(81/GameMain.RATIO, -3/GameMain.RATIO)  ,  new b2Vec2(10/GameMain.RATIO, 121/GameMain.RATIO)  ,  new b2Vec2(-17/GameMain.RATIO, 98/GameMain.RATIO)  ] ,
-						[   new b2Vec2(197/GameMain.RATIO, 51/GameMain.RATIO)  ,  new b2Vec2(185/GameMain.RATIO, 89/GameMain.RATIO)  ,  new b2Vec2(26/GameMain.RATIO, 149/GameMain.RATIO)  ,  new b2Vec2(10/GameMain.RATIO, 121/GameMain.RATIO)  ,  new b2Vec2(81/GameMain.RATIO, -3/GameMain.RATIO)  ,  new b2Vec2(102/GameMain.RATIO, -4/GameMain.RATIO)  ,  new b2Vec2(144/GameMain.RATIO, -1/GameMain.RATIO)  ,  new b2Vec2(181/GameMain.RATIO, 13/GameMain.RATIO)  ] ,
-						[   new b2Vec2(98/GameMain.RATIO, 189/GameMain.RATIO)  ,  new b2Vec2(26/GameMain.RATIO, 149/GameMain.RATIO)  ,  new b2Vec2(185/GameMain.RATIO, 89/GameMain.RATIO)  ,  new b2Vec2(175/GameMain.RATIO, 140/GameMain.RATIO)  ,  new b2Vec2(163/GameMain.RATIO, 175/GameMain.RATIO)  ] ,
-						[   new b2Vec2(175/GameMain.RATIO, 140/GameMain.RATIO)  ,  new b2Vec2(185/GameMain.RATIO, 89/GameMain.RATIO)  ,  new b2Vec2(186/GameMain.RATIO, 114/GameMain.RATIO)  ] ,
-						[   new b2Vec2(144/GameMain.RATIO, -1/GameMain.RATIO)  ,  new b2Vec2(102/GameMain.RATIO, -4/GameMain.RATIO)  ,  new b2Vec2(123/GameMain.RATIO, -5/GameMain.RATIO)  ]
+						[   new b2Vec2(50/GameMain.RATIO, 145/GameMain.RATIO)  ,  new b2Vec2(53/GameMain.RATIO, 109/GameMain.RATIO)  ,  new b2Vec2(147/GameMain.RATIO, 152/GameMain.RATIO)  ,  new b2Vec2(102/GameMain.RATIO, 182/GameMain.RATIO)  ] ,
+						[   new b2Vec2(14/GameMain.RATIO, 13/GameMain.RATIO)  ,  new b2Vec2(52/GameMain.RATIO, -3/GameMain.RATIO)  ,  new b2Vec2(53/GameMain.RATIO, 109/GameMain.RATIO)  ,  new b2Vec2(19/GameMain.RATIO, 95/GameMain.RATIO)  ,  new b2Vec2(-4/GameMain.RATIO, 55/GameMain.RATIO)  ] ,
+						[   new b2Vec2(151/GameMain.RATIO, 105/GameMain.RATIO)  ,  new b2Vec2(98/GameMain.RATIO, 37/GameMain.RATIO)  ,  new b2Vec2(119/GameMain.RATIO, 5/GameMain.RATIO)  ,  new b2Vec2(144/GameMain.RATIO, -1/GameMain.RATIO)  ,  new b2Vec2(181/GameMain.RATIO, 13/GameMain.RATIO)  ,  new b2Vec2(197/GameMain.RATIO, 51/GameMain.RATIO)  ,  new b2Vec2(185/GameMain.RATIO, 89/GameMain.RATIO)  ] ,
+						[   new b2Vec2(52/GameMain.RATIO, -3/GameMain.RATIO)  ,  new b2Vec2(98/GameMain.RATIO, 37/GameMain.RATIO)  ,  new b2Vec2(151/GameMain.RATIO, 105/GameMain.RATIO)  ,  new b2Vec2(147/GameMain.RATIO, 152/GameMain.RATIO)  ,  new b2Vec2(53/GameMain.RATIO, 109/GameMain.RATIO)  ] ,
+						[   new b2Vec2(147/GameMain.RATIO, 152/GameMain.RATIO)  ,  new b2Vec2(151/GameMain.RATIO, 105/GameMain.RATIO)  ,  new b2Vec2(157/GameMain.RATIO, 128/GameMain.RATIO)  ] ,
+						[   new b2Vec2(98/GameMain.RATIO, 37/GameMain.RATIO)  ,  new b2Vec2(52/GameMain.RATIO, -3/GameMain.RATIO)  ,  new b2Vec2(78/GameMain.RATIO, 9/GameMain.RATIO)  ]
 					]
 					
 				]
@@ -118,7 +120,7 @@ package
 			
 			
 			_BallBody = createBody("mouse", GameMain.world, b2Body.b2_dynamicBody,bMovie); 
-		
+			_BallBody.SetFixedRotation(true); 
 			super(_BallBody, bMovie); 
 			trace(_xpos, _ypos); 
 		}
@@ -154,66 +156,61 @@ package
 		addChild(bMovie); 		
 	}
 		
-		public function createBody(name:String,  world:b2World, bodyType:uint, userData:*):b2Body
-		{
-			var fixtures:Array = dict[name];
-			
-			
-			//create body 
-			var body:b2Body;		
-			var f:Number;
-			
-			// prepare body def
-			var bodyDef:b2BodyDef = new b2BodyDef();
-			bodyDef.type = bodyType;
-			bodyDef.userData = userData;
-			
-			
-			// create the body
-			body = GameMain.world.CreateBody(bodyDef);
-			// prepare fixtures
-			for(f=0; f<fixtures.length; f++)
-			{
-				var fixture:Array = fixtures[f];
-				
-				var fixtureDef:b2FixtureDef = new b2FixtureDef();
-				
-				fixtureDef.density=fixture[0];
-				fixtureDef.friction=fixture[1];
-				fixtureDef.restitution=fixture[2];
-				
-				fixtureDef.filter.categoryBits = fixture[3];
-				fixtureDef.filter.maskBits = fixture[4];
-				fixtureDef.filter.groupIndex = fixture[5];
-				fixtureDef.isSensor = fixture[6];
-				
-				if(fixture[7] == "POLYGON")
-				{                    
-					var p:Number;
-					var polygons:Array = fixture[8];
-					for(p=0; p<polygons.length; p++)
-					{
-						var polygonShape:b2PolygonShape = new b2PolygonShape();
-						polygonShape.SetAsArray(polygons[p], polygons[p].length);
-						fixtureDef.shape=polygonShape;
-						
-						body.CreateFixture(fixtureDef);
-						
-						
-					}
-				}
-				else if(fixture[7] == "CIRCLE")
-				{
-					var circleShape:b2CircleShape = new b2CircleShape(fixture[9]);                    
-					circleShape.SetLocalPosition(fixture[8]);
-					fixtureDef.shape=circleShape;
-					body.CreateFixture(fixtureDef);                    
-				}                
-			}
-			
-			return body;
+	public function createBody(name:String, world:b2World, bodyType:uint, userData:*):b2Body
+	{
+		var fixtures:Array = dict[name];
 		
+		var body:b2Body;
+		var f:Number;
+		
+		// prepare body def
+		var bodyDef:b2BodyDef = new b2BodyDef();
+		bodyDef.type = bodyType;
+		bodyDef.userData = userData;
+		
+		// create the body
+		body = world.CreateBody(bodyDef);
+		
+		// prepare fixtures
+		for(f=0; f<fixtures.length; f++)
+		{
+			var fixture:Array = fixtures[f];
+			
+			var fixtureDef:b2FixtureDef = new b2FixtureDef();
+			
+			fixtureDef.density=fixture[0];
+			fixtureDef.friction=fixture[1];
+			fixtureDef.restitution=fixture[2];
+			
+			fixtureDef.filter.categoryBits = fixture[3];
+			fixtureDef.filter.maskBits = fixture[4];
+			fixtureDef.filter.groupIndex = fixture[5];
+			fixtureDef.isSensor = fixture[6];
+			
+			if(fixture[7] == "POLYGON")
+			{                    
+				var p:Number;
+				var polygons:Array = fixture[8];
+				for(p=0; p<polygons.length; p++)
+				{
+					var polygonShape:b2PolygonShape = new b2PolygonShape();
+					polygonShape.SetAsArray(polygons[p], polygons[p].length);
+					fixtureDef.shape=polygonShape;
+					
+					body.CreateFixture(fixtureDef);
+				}
+			}
+			else if(fixture[7] == "CIRCLE")
+			{
+				var circleShape:b2CircleShape = new b2CircleShape(fixture[9]);                    
+				circleShape.SetLocalPosition(fixture[8]);
+				fixtureDef.shape=circleShape;
+				body.CreateFixture(fixtureDef);                    
+			}                
 		}
+		
+		return body;
+	}
 	
 		
 		override protected function childSpecificUpdating():void
@@ -236,11 +233,13 @@ package
 				diff.Multiply(12);
 				_BallBody.SetLinearVelocity(diff); 
 				_BallBody.SetAngularVelocity(0); 
+			//	_BallBody.IsFixedRotation(); 
 				
 			} 
 			// set the rotation of the sprite
 			bMovie.x = _BallBody.GetPosition().x * GameMain.RATIO; 
 			bMovie.y = _BallBody.GetPosition().y * GameMain.RATIO;  
+			bMovie.rotation = _BallBody.GetAngle() * (180/Math.PI);
 			//particles.x = (_BallBody.GetPosition().x * GameMain.RATIO); 
 			//particles.y = (_BallBody.GetPosition().y* GameMain.RATIO)+10; 
 
