@@ -40,25 +40,12 @@ package
 		private static var _world:b2World; 
 		public static const GAME_WIDTH:Number = 1024; 
 		public static const GAME_HEIGHT:Number = 768;  
-		
-		//debug vars
-//		protected var debugImage:Image; 
-//		protected var bmd:BitmapData;  
-//		protected var debugSprite:flash.display.Sprite; 
-//		protected var debugDraw:b2DebugDraw; 
-//		protected var texture:Texture; 
+		 
 		public function GameMain() 
 		{
 			addEventListener(Event.ADDED_TO_STAGE, onAdded);
 			level1 = new LevelOne(); 
 			addChild(level1); 
-			
-//			//initing box2d debuggger 
-//			bmd = new BitmapData(1024,768, true, 0x0);
-//			debugSprite = new flash.display.Sprite(); 
-//			debugDraw= new b2DebugDraw(); 
-//			texture = Texture.fromBitmapData(bmd); 
-//			debugImage = new Image(texture); 
 			
 		}
 		private function onAdded(e:Event):void
@@ -76,23 +63,18 @@ package
 				stage.addEventListener(TouchEvent.TOUCH, onTouch);
 				stage.addEventListener(KeyboardEvent.KEY_DOWN, deleteLevel);
 				}
-			//debug
-			// debugIt();
-		//	 addChild(debugImage); 
 		}		
 		
 		private function updateW(e:Event):void
 		{
-			var timeStep:Number = 1 / 30;
+			var timeStep:Number = 1 / 60;
 			var velocityIterations:int = 6;
 			var positionIterations:int = 2;
 			
-			//	UpdateMouseWorld();
 			
 			_world.Step(timeStep, velocityIterations, positionIterations);
 			_world.ClearForces();
 			_world.DrawDebugData();
-			//drawDebug();
 			
 		}		
 		
@@ -161,30 +143,6 @@ package
 			
 		}
 
-//		protected function debugIt():void {
-//			//add all of the debug crap here 
-//			var debugSprite:flash.display.Sprite = new flash.display.Sprite(); 
-//			//addChild(debugSprite);
-//			
-//			
-//			debugDraw.SetSprite(debugSprite);
-//			GameMain.world.SetDebugDraw(debugDraw); 
-//			
-//			debugDraw.SetDrawScale(GameMain.RATIO);
-//			debugDraw.SetLineThickness( 1.0);
-//			debugDraw.SetAlpha(1);
-//			debugDraw.SetFillAlpha(0.8);
-//			debugDraw.SetFlags(b2DebugDraw.e_shapeBit);
-//		}
-//		
-//		protected function drawDebug():void {
-//			
-//			//copy into starling and add it 
-//			
-//			bmd.draw(debugSprite); 
-//			
-//			
-//		}
 		
 		
 	}

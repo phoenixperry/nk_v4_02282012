@@ -53,13 +53,13 @@ package
 			addEventListener(Event.ENTER_FRAME, update); 
 		
 	
-			for (var j:int = 0; j < 20; j++) 
-			{
-				var xp:Number = 200 + (j*20); 	
-				var foo2:BallActor = new BallActor(this, new Point(xp,200), new Point(10,-3));
-				addChild(foo2); 
-				items.push(foo2); 
-			}
+//			for (var j:int = 0; j < 20; j++) 
+//			{
+//				var xp:Number = 200 + (j*20); 	
+//				var foo2:BallActor = new BallActor(this, new Point(xp,200), new Point(10,-3));
+//				addChild(foo2); 
+//				items.push(foo2); 
+//			}
 			
 	//		balloon
 			ball = new BalloonActor();

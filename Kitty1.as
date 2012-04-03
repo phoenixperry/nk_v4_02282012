@@ -92,6 +92,7 @@ package
 		
 		_Kitty1Body= createBody("kitty", GameMain.world, b2Body.b2_dynamicBody,kMovie); 
 		_Kitty1Body.SetFixedRotation(true); 
+	
 		super(_Kitty1Body, kMovie); 
 	}
 		
@@ -116,6 +117,8 @@ package
 			var bodyDef:b2BodyDef = new b2BodyDef();
 			bodyDef.type = bodyType;
 			bodyDef.userData = userData;
+			//fixes sticking but lord oh lord at what cost 
+			bodyDef.bullet = true; 
 			
 			
 			// create the body

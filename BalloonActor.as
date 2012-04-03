@@ -168,6 +168,10 @@ package
 		bodyDef.type = bodyType;
 		bodyDef.userData = userData;
 		
+		//fixes sticking but lord oh lord at what cost 
+		//bodyDef.bullet = true; 
+		
+		
 		// create the body
 		body = world.CreateBody(bodyDef);
 		
@@ -233,7 +237,7 @@ package
 				diff.Multiply(12);
 				_BallBody.SetLinearVelocity(diff); 
 				_BallBody.SetAngularVelocity(0); 
-			//	_BallBody.IsFixedRotation(); 
+				_BallBody.IsFixedRotation(); 
 				
 			} 
 			// set the rotation of the sprite
