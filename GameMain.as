@@ -13,6 +13,7 @@ package
 	import flash.display.Sprite;
 	import flash.geom.Point;
 	import flash.ui.Keyboard;
+	import flash.utils.Timer;
 	
 	import starling.core.Starling;
 	import starling.display.Image;
@@ -23,7 +24,7 @@ package
 	import starling.events.TouchEvent;
 	import starling.events.TouchPhase;
 	import starling.textures.Texture;
-	import starling.utils.Stats; 
+	import starling.utils.Stats;
 
 	
 	
@@ -40,17 +41,21 @@ package
 		private static var _world:b2World; 
 		public static const GAME_WIDTH:Number = 1024; 
 		public static const GAME_HEIGHT:Number = 768;  
+		
+		private var gameTimer:GameTimer; 
 		 
 		public function GameMain() 
 		{
 			addEventListener(Event.ADDED_TO_STAGE, onAdded);
 			level1 = new LevelOne(); 
-			addChild(level1); 
-			
+			addChild(level1); 	
 		}
 		private function onAdded(e:Event):void
 		{
-			setupPhysicsWorld(); 	
+			setupPhysicsWorld();
+			gameTimer = new GameTimer(); 
+			
+			
 			this.addChild(new Stats());
 			removeEventListener(Event.ADDED_TO_STAGE, onAdded); 
 	
@@ -64,6 +69,8 @@ package
 				stage.addEventListener(KeyboardEvent.KEY_DOWN, deleteLevel);
 				}
 		}		
+		
+
 		
 		private function updateW(e:Event):void
 		{
@@ -142,6 +149,7 @@ package
 			_world.SetDebugDraw(debugDraw);
 			
 		}
+
 
 		
 		
