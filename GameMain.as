@@ -12,6 +12,8 @@ package
 	import flash.display.BitmapData;
 	import flash.display.Sprite;
 	import flash.geom.Point;
+	import flash.globalization.CurrencyFormatter;
+	import flash.printing.PrintJob;
 	import flash.ui.Keyboard;
 	import flash.utils.Timer;
 	
@@ -69,9 +71,71 @@ package
 				stage.addEventListener(KeyboardEvent.KEY_DOWN, deleteLevel);
 				}
 		}		
-		
-
-		
+	//	trying to fix the time step. This is going to have to happen. Oh zee pain. 
+//		private var _currentTime:Number = gameTimer.getVirtualTime()/1000; 
+//		private const FIXED_TIMESTEP:Number = 1/60; 
+//		private var fixedTimeStepAccumulator:Number = 0; 
+//		private var fixedTimeStepAccumulatorRatio:Number = 0; 
+//		private var velocityIterations:int = 8; 
+//		private var positionIterations:int = 1; 
+//		
+//		public function process():void {
+//			var newTime:Number = gameTimer.getVirtualTime()/1000;
+//			var dt:Number = newTime - _currentTime; 
+//			_currentTime= newTime; 
+//			const MAX_STEPS:int = 5; 
+//			fixedTimeStepAccumulator +=dt; 
+//			const nSteps:int = Math.floor(fixedTimeStepAccumulator/FIXED_TIMESTEP); 
+//			
+//			if (nSteps > 0) 
+//			{
+//				fixedTimeStepAccumulator -= nSteps* FIXED_TIMESTEP; 
+//			}
+//			fixedTimeStepAccumulatorRatio = fixedTimeStepAccumulator/FIXED_TIMESTEP; 
+//			const nStepsClamped:int= min(nSteps, MAX_STEPS); 
+//			for (var i:int = 0; i < nStepsClamped; i++) 
+//			{
+//				resetSmoothStates(); 
+//				singleStep(FIXED_TIMESTEP); 
+//			}
+//			world.ClearForces(); 
+//			smoothStates(); 
+//			
+//		}
+//		
+//		private function singleStep(dt:Number):void {
+//			_world.Step(dt, velocityIterations, positionIterations); 
+//			_world.DrawDebugData();
+//		}
+////		
+//		
+//		private function smoothStates():void {
+//			const oneMinusRatio:Number = 1.0 - fixedTimeStepAccumulatorRatio; 
+//			for each (var body:b2Body = GameMain._world.GetBodyList(); body; body=body.GetNext())
+//			{ 			
+//				//gonna need to call the Actor.costume update and adjust the 
+//				//stuff from here to there. Oh zee joy
+		// from alan bishops' blog - need to fully comprehend ramifications with this config
+//				texture.position.x = fixedTimestepAccumulatorRatio * box2Dbody.GetPosition().x 
+				//+ (oneMinusRatio * body.previousPosition.x);
+//				texture.position.y = fixedTimestepAccumulatorRatio * box2Dbody.GetPosition().y + 
+				//oneMinusRatio * body.previousPosition.y;
+//				texture.rotation = 
+				//box2Dbody.GetAngle() * fixedTimestepAccumulatorRatio + oneMinusRatio * body.previousAngle;
+//		}
+//		MORE FROM ALAN 
+//		private function resetSmoothStates():void
+//		{
+//			for each (var body:Body in bodies)
+//			{
+//				texture.position.x = body.previousPosition.x = body.box2Dbody.GetPosition().x;
+//				
+//				texture.position.y = body.previousPosition.y = body.box2Dbody.GetPosition().y;
+//				
+//				texture.rotation = body.previousAngle = body.box2Dbody.GetAngle();
+//			}
+//		}
+//		//end of timestep fix 
 		private function updateW(e:Event):void
 		{
 			var timeStep:Number = 1 / 60;
@@ -87,7 +151,7 @@ package
 		
 		private function deleteLevel(e:KeyboardEvent):void { 
 			if(e.keyCode == Keyboard.RIGHT){
-			//level1.removeLevel(); 
+			level1.removeLevel(); 
 			}
 			trace(e);
 		}

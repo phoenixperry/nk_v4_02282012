@@ -120,20 +120,30 @@ package
 	override public function removeLevel():void {
 		//this is going to take more than this... research here 
 		//remove all the listeners for a level. 
+		//			if(this.numChildren < 0) {
+		//				
+		//				removeChildAt(1); 
+		//				
+		//			}
 
-		//remove all the actors of the level. 
-			
-			ball.destroy(); 
-			
-			if(this.numChildren < 0) {
-				
-				removeChildAt(1); 
-				
-			}
-			removeEventListeners(); 
+			//remove textures, children, listeners the shazm! 
+			ball.remove(); 	
+			kitty.remove(); 
+			para.remove(); 
+		
+		//getting the box2d bodies outta here!  
+		
 			kitty.destroy(); 
 			ball.destroy(); 
 			
+			//now let's get those starling babies out of here! 
+			//objects first! 
+			this.removeChildren(); 
+				
+			this.dispose();
+			trace(numChildren); 
+			//listeners outta here
+			this.removeEventListeners(); 
 			
 	}	
 	

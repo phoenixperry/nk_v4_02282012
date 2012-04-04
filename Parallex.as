@@ -23,16 +23,19 @@ package
 		private var container:Sprite; 
 		private var _vert:Boolean; 
 		
+		//textures 
+		private var para1Texture:Texture; 
+		private var para2Texture:Texture;
 		
 		public function Parallex(img1Class:Class, img2Class:Class, w:Number, h:Number, myBreadth:Number, speed:Number, vert:Boolean):void
 		{ 
 			
 			var para1Bit:Bitmap = new img1Class(); 
-			var para1Texture:Texture = Texture.fromBitmap(para1Bit, true); 
+			 para1Texture = Texture.fromBitmap(para1Bit, true); 
 			_img1 = new Image(para1Texture); 	
 						
 			var para2Bit:Bitmap = new img2Class(); 
-			var para2Texture:Texture = Texture.fromBitmap(para2Bit, true); 
+			 para2Texture = Texture.fromBitmap(para2Bit, true); 
 			_img2 = new Image(para2Texture); 		
 			container = new Sprite(); 
 			_w = w; 
@@ -86,6 +89,14 @@ package
 				
 			}
 		}	
-	
+		public function remove ():void
+		{
+			para1Texture.dispose(); 
+			para1Texture.dispose(); 
+			this.removeChildren(); 
+			//			
+		}
+		
+	//l2
 	}
 }

@@ -18,7 +18,7 @@ package
 		public function startTimer():void {
 			_GameTimer = new Timer(1000); 
 			_GameTimer.start(); 
-			this.addEventListener(TimerEvent.TIMER, saveTime); 
+			_GameTimer.addEventListener(TimerEvent.TIMER, saveTime); 
 		}
 		
 		public function saveTime(e:TimerEvent):void {

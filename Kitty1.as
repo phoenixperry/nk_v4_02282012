@@ -42,18 +42,21 @@ package
 		
 		private var _beenHit:Boolean = false;
 		
+		//textures 
+		private var kitty1Atlas:TextureAtlas; 
+		private var kitty1Texture:Texture; 
 		
 		public function Kitty1() 
 		{
 			addEventListener(Event.ADDED_TO_STAGE, kitty1Added); 
 			
 			var kitty1Bitmap:Bitmap = new kitty1Bit(); 
-			var kitty1Texture:Texture = Texture.fromBitmap(kitty1Bitmap, true); 
+			 kitty1Texture = Texture.fromBitmap(kitty1Bitmap, true); 
 			
 			var kitty1Image:Image = new Image(kitty1Texture); 
 			
 			var kitty1Xml:XML = XML(new kittyXML()); 
-			var kitty1Atlas:TextureAtlas = new TextureAtlas(kitty1Texture, kitty1Xml); 
+			 kitty1Atlas = new TextureAtlas(kitty1Texture, kitty1Xml); 
 			
 			//first create the costume 
 			var kframes:Vector.<Texture> = kitty1Atlas.getTextures("kitty"); 
@@ -192,6 +195,15 @@ package
 			//do animation for hit here. 
 			trace("kitty hit by balloon"); 
 		}
+		
+		public function remove ():void
+		{
+			kitty1Atlas.dispose(); 
+			kitty1Texture.dispose(); 
+ 			this.removeChildren(); 
+			//			
+		}
+		
 //last two 	
 	}
 }	

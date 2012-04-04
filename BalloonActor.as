@@ -59,6 +59,10 @@ package
 		private static var _xpos:Number; 
 		private static var _ypos:Number; 
 		
+		//textures
+		private var balloonTexture:Texture; 
+		private  var balloonAtlas:TextureAtlas; 
+		
 		private var _beenHit:Boolean;
 		
 		public function BalloonActor()
@@ -67,12 +71,12 @@ package
 			_particleMouseX = 0; 
 
 			var balloonBitmap:Bitmap = new BalloonBit(); 
-			var balloonTexture:Texture = Texture.fromBitmap(balloonBitmap, true); 
+			balloonTexture = Texture.fromBitmap(balloonBitmap, true); 
 			
 			var balloonImage:Image = new Image(balloonTexture); 
 			
 			var balloonXml:XML = XML(new BalloonXml()); 
-			var balloonAtlas:TextureAtlas = new TextureAtlas(balloonTexture, balloonXml); 
+			 balloonAtlas = new TextureAtlas(balloonTexture, balloonXml); 
 			
 			
 			
@@ -267,8 +271,11 @@ package
 			trace("balloon hit kitty");
 			
 		}
-		
-//			
-			
+		 public function remove ():void
+		{
+			 balloonTexture.dispose(); 
+			 balloonAtlas.dispose(); 
+			this.removeChildren(); 			
+		 }
 		}
 	}
