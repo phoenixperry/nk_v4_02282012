@@ -42,14 +42,16 @@ package
 		private static var _world:b2World; 
 		public static const GAME_WIDTH:Number = 1024; 
 		public static const GAME_HEIGHT:Number = 768;  
+		private var makeSprites:SingletonSpriteSheet; 
 		
 		private var gameTimer:GameTimer; 
-		 
+		
 		public function GameMain() 
 		{
+			makeSprites = SingletonSpriteSheet.getInstance(); 
 			addEventListener(Event.ADDED_TO_STAGE, onAdded);
 			level1 = new LevelOne(); 
-			addChild(level1); 	
+			addChild(level1); 
 		}
 		private function onAdded(e:Event):void
 		{

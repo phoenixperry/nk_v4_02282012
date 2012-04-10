@@ -9,7 +9,7 @@ package
 	import starling.display.Image;
 	import starling.display.Sprite;
 	import starling.textures.Texture; 
-
+	
 	/**
 	 * ...
 	 * @author phoenix
@@ -18,15 +18,15 @@ package
 	{
 		protected var _body:b2Body; 
 		protected var _costume:DisplayObject; 
-
+		
 		public function Actor(myBody:b2Body, myCosutme:DisplayObject) 
 		{	
-
+			
 			_body = myBody; 
 			_costume = myCosutme; 
 			_body.SetUserData(this); 
 			if ( _body.GetType() == b2Body.b2_dynamicBody)
-		
+				
 			{	
 				updateMyLook(); 
 				childSpecificUpdating(); //note if you do this you have to have a listener to trigger motion - just be aware of it 
@@ -53,11 +53,11 @@ package
 			//_costume.rotation = _body.GetAngle() * 180 / Math.PI; 
 			
 			if (_costume.x < 0 || _costume.y < 0 || _costume.x > 1024 || _costume.y >768) {
-			//	removeEventListener(Event.ENTER_FRAME, onRun); 
+				//	removeEventListener(Event.ENTER_FRAME, onRun); 
 				//parent.removeChild(this); 
 				destroy(); 
 			}
- 		}
+		}
 		
 		
 		public function hitByActor(actor:Actor):void
@@ -72,14 +72,14 @@ package
 		
 		protected function cleanUpBeforeRemoving():void { 
 			//remove the costume 
-//			_costume.parent.removeChild(_costume); 
+			//			_costume.parent.removeChild(_costume); 
 			GameMain.world.DestroyBody(_body);
 			_costume.removeEventListeners(); 
 			
 		}
-
 		
-	
+		
+		
 		
 		
 	}

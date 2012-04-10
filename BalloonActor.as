@@ -25,7 +25,7 @@ package
 	import starling.extensions.ParticleDesignerPS;
 	import starling.textures.Texture;
 	import starling.textures.TextureAtlas;
-
+	
 	public class BalloonActor extends Actor
 	{
 		
@@ -37,7 +37,7 @@ package
 		
 		[Embed(source="./assets/level1/sprites/fullSheet/allSprites.png")] 
 		public var BalloonBit:Class;  
-				
+		
 		[Embed(source="./assets/level1/sprites/fullSheet/fullSheet.xml",  mimeType="application/octet-stream")]
 		public var BalloonSheet:Class;
 		
@@ -50,7 +50,7 @@ package
 		public var _BallBody:b2Body; 
 		protected var dict:Dictionary;
 		protected var bMovie:MovieClip; 
-	
+		
 		
 		protected var _mouseXWorldPhys:Number;
 		protected var _mouseYWorldPhys:Number;
@@ -66,40 +66,43 @@ package
 		
 		private static var _lshoulder:Vector; 
 		private static var _rshoulder:Vector; 
-		
-		
+	
 		//textures
 		private var balloonTexture:Texture; 
 		private  var balloonAtlas:TextureAtlas; 
 		
 		private var _beenHit:Boolean;
+	
+		//experiment with singles 
+		private var b2Movie:MovieClip; 
+		private var sprites:StarSpriteCostume; 
 		
 		public function BalloonActor()
 		{
 			addEventListener(Event.ADDED_TO_STAGE, balloonAdded); 
 			_particleMouseX = 0; 
-
+			
 			var balloonBitmap:Bitmap = new BalloonBit(); 
 			balloonTexture = Texture.fromBitmap(balloonBitmap, true); 
 			
 			var balloonImage:Image = new Image(balloonTexture); 
-		
+			
 			var balloonXML:XML = XML(new BalloonSheet()); 
 			balloonAtlas = new TextureAtlas(balloonTexture, balloonXML); 
-			
-			
-			
+				
+			sprites = new StarSpriteCostume("balloon", 2); 
+		
 			//first create the costume 
 			var bframes:Vector.<Texture> = balloonAtlas.getTextures("balloon"); 
 			name = "balloon"; 
-			 bMovie= new MovieClip(bframes,3); 
-			 
+			bMovie= new MovieClip(bframes,3); 
+			
 			Starling.juggler.add(bMovie); 
 			
-//			particles = new ParticleDesignerPS(XML(new ParticleXML()),
-//				Texture.fromBitmap(new ParticleTexture())); 
-		
-		
+			//			particles = new ParticleDesignerPS(XML(new ParticleXML()),
+			//				Texture.fromBitmap(new ParticleTexture())); 
+			
+			
 			
 			
 			// point array for box2d 
@@ -138,97 +141,101 @@ package
 			trace(_xpos, _ypos); 
 		}
 		
-	
+		
 		public static function set ypos(value:Number):void
 		{
 			_ypos = value;
 			trace(_ypos, "I'm _ypos from the class"); 
 		}
-
-	
+		
+		
 		public static function set xpos(value:Number):void
 		{
 			_xpos = value;
 			trace(_xpos, "I'm _xpos from the class");
 		}
-
-	public function balloonAdded(e:Event):void { 
-//	
-//		particles.start(); 
-//		particles.emitterX = bMovie.x +93; 
-//		particles.emitterY = bMovie.y + 140; 
-//		_particleMouseX = 	particles.emitterX; 
-//		py = 	particles.emitterY;
-//		
-//		//now add it to juggler
-//		Starling.juggler.add(particles); 
-
-
-	//	addChild(particles); 
-		removeEventListener(Event.ADDED_TO_STAGE, balloonAdded); 
-		addChild(bMovie); 		
-	}
 		
-	public function createBody(name:String, world:b2World, bodyType:uint, userData:*):b2Body
-	{
-		var fixtures:Array = dict[name];
-		
-		var body:b2Body;
-		var f:Number;
-		
-		// prepare body def
-		var bodyDef:b2BodyDef = new b2BodyDef();
-		bodyDef.type = bodyType;
-		bodyDef.userData = userData;
-		
-		//fixes sticking but lord oh lord at what cost 
-		//bodyDef.bullet = true; 
-		
-		
-		// create the body
-		body = world.CreateBody(bodyDef);
-		
-		// prepare fixtures
-		for(f=0; f<fixtures.length; f++)
-		{
-			var fixture:Array = fixtures[f];
+		public function balloonAdded(e:Event):void { 
+			//	
+			//		particles.start(); 
+			//		particles.emitterX = bMovie.x +93; 
+			//		particles.emitterY = bMovie.y + 140; 
+			//		_particleMouseX = 	particles.emitterX; 
+			//		py = 	particles.emitterY;
+			//		
+			//		//now add it to juggler
+			//		Starling.juggler.add(particles); 
 			
-			var fixtureDef:b2FixtureDef = new b2FixtureDef();
 			
-			fixtureDef.density=fixture[0];
-			fixtureDef.friction=fixture[1];
-			fixtureDef.restitution=fixture[2];
+			//	addChild(particles); 
+			b2Movie = sprites.getDressed(); 
 			
-			fixtureDef.filter.categoryBits = fixture[3];
-			fixtureDef.filter.maskBits = fixture[4];
-			fixtureDef.filter.groupIndex = fixture[5];
-			fixtureDef.isSensor = fixture[6];
+			addChild(b2Movie); 
+			removeEventListener(Event.ADDED_TO_STAGE, balloonAdded); 
+			addChild(bMovie); 		
 			
-			if(fixture[7] == "POLYGON")
-			{                    
-				var p:Number;
-				var polygons:Array = fixture[8];
-				for(p=0; p<polygons.length; p++)
-				{
-					var polygonShape:b2PolygonShape = new b2PolygonShape();
-					polygonShape.SetAsArray(polygons[p], polygons[p].length);
-					fixtureDef.shape=polygonShape;
-					
-					body.CreateFixture(fixtureDef);
-				}
-			}
-			else if(fixture[7] == "CIRCLE")
-			{
-				var circleShape:b2CircleShape = new b2CircleShape(fixture[9]);                    
-				circleShape.SetLocalPosition(fixture[8]);
-				fixtureDef.shape=circleShape;
-				body.CreateFixture(fixtureDef);                    
-			}                
 		}
 		
-		return body;
-	}
-	
+		public function createBody(name:String, world:b2World, bodyType:uint, userData:*):b2Body
+		{
+			var fixtures:Array = dict[name];
+			
+			var body:b2Body;
+			var f:Number;
+			
+			// prepare body def
+			var bodyDef:b2BodyDef = new b2BodyDef();
+			bodyDef.type = bodyType;
+			bodyDef.userData = userData;
+			
+			//fixes sticking but lord oh lord at what cost 
+			//bodyDef.bullet = true; 
+			
+			
+			// create the body
+			body = world.CreateBody(bodyDef);
+			
+			// prepare fixtures
+			for(f=0; f<fixtures.length; f++)
+			{
+				var fixture:Array = fixtures[f];
+				
+				var fixtureDef:b2FixtureDef = new b2FixtureDef();
+				
+				fixtureDef.density=fixture[0];
+				fixtureDef.friction=fixture[1];
+				fixtureDef.restitution=fixture[2];
+				
+				fixtureDef.filter.categoryBits = fixture[3];
+				fixtureDef.filter.maskBits = fixture[4];
+				fixtureDef.filter.groupIndex = fixture[5];
+				fixtureDef.isSensor = fixture[6];
+				
+				if(fixture[7] == "POLYGON")
+				{                    
+					var p:Number;
+					var polygons:Array = fixture[8];
+					for(p=0; p<polygons.length; p++)
+					{
+						var polygonShape:b2PolygonShape = new b2PolygonShape();
+						polygonShape.SetAsArray(polygons[p], polygons[p].length);
+						fixtureDef.shape=polygonShape;
+						
+						body.CreateFixture(fixtureDef);
+					}
+				}
+				else if(fixture[7] == "CIRCLE")
+				{
+					var circleShape:b2CircleShape = new b2CircleShape(fixture[9]);                    
+					circleShape.SetLocalPosition(fixture[8]);
+					fixtureDef.shape=circleShape;
+					body.CreateFixture(fixtureDef);                    
+				}                
+			}
+			
+			return body;
+		}
+		
 		
 		override protected function childSpecificUpdating():void
 		{ 
@@ -259,7 +266,7 @@ package
 			bMovie.rotation = _BallBody.GetAngle() * (180/Math.PI);
 			//particles.x = (_BallBody.GetPosition().x * GameMain.RATIO); 
 			//particles.y = (_BallBody.GetPosition().y* GameMain.RATIO)+10; 
-
+			
 			//trace(_xpos, _ypos); 
 			
 		}		
@@ -280,55 +287,57 @@ package
 			trace("balloon hit kitty");
 			
 		}
-
-		 public function remove ():void
+		
+		public function remove ():void
 		{
-			 balloonTexture.dispose(); 
-			 balloonAtlas.dispose(); 
-			this.removeChildren(); 			
-		 }
-		 
+			balloonTexture.dispose(); 
+			balloonAtlas.dispose(); 
+			this.removeChildren(); 
+			b2Movie.dispose(); 
+			trace(this.numChildren); 
+		}
+		
 		public static function get larm():Vector
 		{
 			return _larm;
 		}
-
+		
 		public static function set larm(value:Vector):void
 		{
 			_larm = value;
 		}
-
+		
 		public static function get rarm():Vector
 		{
 			return _rarm;
 		}
-
+		
 		public static function set rarm(value:Vector):void
 		{
 			_rarm = value;
 		}
-
+		
 		public static function get lshoulder():Vector
 		{
 			return _lshoulder;
 		}
-
+		
 		public static function set lshoulder(value:Vector):void
 		{
 			_lshoulder = value;
 		}
-
+		
 		public static function get rshoulder():Vector
 		{
 			return _rshoulder;
 		}
-
+		
 		public static function set rshoulder(value:Vector):void
 		{
 			_rshoulder = value;
 		}
-
-		 
-	//last 2 	 
-		}
+		
+		
+		//last 2 	 
 	}
+}
