@@ -11,6 +11,7 @@ package
 	import Box2D.Dynamics.b2FixtureDef;
 	
 	import flash.display.Bitmap;
+	import flash.display.Sprite;
 	import flash.geom.Point;
 	import flash.ui.GameInput;
 	import flash.utils.Dictionary;
@@ -23,7 +24,8 @@ package
 	import starling.extensions.*;
 	import starling.extensions.ParticleDesignerPS;
 	import starling.textures.Texture;
-	import starling.textures.TextureAtlas;  
+	import starling.textures.TextureAtlas;
+
 	public class BalloonActor extends Actor
 	{
 		
@@ -33,11 +35,11 @@ package
 		[Embed(source="./assets/level1/sprites/particle/particle.pex", mimeType="application/octet-stream")]
 		public var ParticleXML:Class; 
 		
-		[Embed(source="./assets/level1/sprites/balloon.png")] 
+		[Embed(source="./assets/level1/sprites/fullSheet/allSprites.png")] 
 		public var BalloonBit:Class;  
-		
-		[Embed(source="./assets/level1/sprites/balloon.xml",  mimeType="application/octet-stream")]
-		public var BalloonXml:Class;
+				
+		[Embed(source="./assets/level1/sprites/fullSheet/fullSheet.xml",  mimeType="application/octet-stream")]
+		public var BalloonSheet:Class;
 		
 		public var particles:ParticleDesignerPS; 
 		
@@ -59,6 +61,13 @@ package
 		private static var _xpos:Number; 
 		private static var _ypos:Number; 
 		
+		private static var _larm:Vector; 
+		private static var _rarm:Vector; 
+		
+		private static var _lshoulder:Vector; 
+		private static var _rshoulder:Vector; 
+		
+		
 		//textures
 		private var balloonTexture:Texture; 
 		private  var balloonAtlas:TextureAtlas; 
@@ -74,9 +83,9 @@ package
 			balloonTexture = Texture.fromBitmap(balloonBitmap, true); 
 			
 			var balloonImage:Image = new Image(balloonTexture); 
-			
-			var balloonXml:XML = XML(new BalloonXml()); 
-			 balloonAtlas = new TextureAtlas(balloonTexture, balloonXml); 
+		
+			var balloonXML:XML = XML(new BalloonSheet()); 
+			balloonAtlas = new TextureAtlas(balloonTexture, balloonXML); 
 			
 			
 			
@@ -144,15 +153,15 @@ package
 		}
 
 	public function balloonAdded(e:Event):void { 
-	
+//	
 //		particles.start(); 
 //		particles.emitterX = bMovie.x +93; 
 //		particles.emitterY = bMovie.y + 140; 
 //		_particleMouseX = 	particles.emitterX; 
 //		py = 	particles.emitterY;
 //		
-		//now add it to juggler
-	//	Starling.juggler.add(particles); 
+//		//now add it to juggler
+//		Starling.juggler.add(particles); 
 
 
 	//	addChild(particles); 
@@ -271,11 +280,55 @@ package
 			trace("balloon hit kitty");
 			
 		}
+
 		 public function remove ():void
 		{
 			 balloonTexture.dispose(); 
 			 balloonAtlas.dispose(); 
 			this.removeChildren(); 			
 		 }
+		 
+		public static function get larm():Vector
+		{
+			return _larm;
+		}
+
+		public static function set larm(value:Vector):void
+		{
+			_larm = value;
+		}
+
+		public static function get rarm():Vector
+		{
+			return _rarm;
+		}
+
+		public static function set rarm(value:Vector):void
+		{
+			_rarm = value;
+		}
+
+		public static function get lshoulder():Vector
+		{
+			return _lshoulder;
+		}
+
+		public static function set lshoulder(value:Vector):void
+		{
+			_lshoulder = value;
+		}
+
+		public static function get rshoulder():Vector
+		{
+			return _rshoulder;
+		}
+
+		public static function set rshoulder(value:Vector):void
+		{
+			_rshoulder = value;
+		}
+
+		 
+	//last 2 	 
 		}
 	}

@@ -34,7 +34,7 @@ package
 		private var RIGHT_WALL_POSITION:Point;  
 		protected var items:Array; 
 		private var ball:BalloonActor; 
-		
+		private var d:Diamonds; 
 
 		public function LevelOne()
 		{
@@ -69,6 +69,8 @@ package
 			kitty = new Kitty1(); 
 			addChild(kitty); 
 			
+			d = new Diamonds(); 
+			addChild(d); 
 		
 			makeAWall();
 			}
@@ -118,13 +120,6 @@ package
 		}
 		
 	override public function removeLevel():void {
-		//this is going to take more than this... research here 
-		//remove all the listeners for a level. 
-		//			if(this.numChildren < 0) {
-		//				
-		//				removeChildAt(1); 
-		//				
-		//			}
 
 			//remove textures, children, listeners the shazm! 
 			ball.remove(); 	

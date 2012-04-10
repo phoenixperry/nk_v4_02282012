@@ -29,11 +29,10 @@ package
 	import starling.utils.Stats;
 
 	
-	
-	
 	public class GameMain extends Sprite
 	{
 		private var level1:LevelOne; 
+		private var level2:LevelTwo; 
 	    private var k:Kinect;
 		private var useKinect:Boolean = false ; 
 		private var _mouseX:Number = 0;
@@ -69,6 +68,7 @@ package
 				
 				stage.addEventListener(TouchEvent.TOUCH, onTouch);
 				stage.addEventListener(KeyboardEvent.KEY_DOWN, deleteLevel);
+				stage.addEventListener(KeyboardEvent.KEY_DOWN, levelCreator);
 				}
 		}		
 	//	trying to fix the time step. This is going to have to happen. Oh zee pain. 
@@ -149,6 +149,12 @@ package
 			
 		}		
 		
+		private function levelCreator(e:KeyboardEvent):void {
+			if(e.keyCode == Keyboard.LEFT) {
+				level2 = new LevelTwo(); 
+				addChild(level2); 
+			}
+		}
 		private function deleteLevel(e:KeyboardEvent):void { 
 			if(e.keyCode == Keyboard.RIGHT){
 			level1.removeLevel(); 
@@ -159,7 +165,7 @@ package
 		private function setupPhysicsWorld():void 
 		{
 			var gravity:b2Vec2 = new b2Vec2(0, 9.8); 
-			var allowSleep:Boolean = true; 
+			var allowSleep:Boolean = false; 
 			 _world = new b2World(gravity, allowSleep); 
 			 addEventListener(Event.ENTER_FRAME, updateW); 
 			
@@ -186,9 +192,8 @@ package
 			var pos:Point = touch.getLocation(stage);
 			trace ( touch.phase );
 			// store the mouse coordinates
-			_mouseY = pos.y;
-			_mouseX = pos.x;
-			trace(pos.x, pos.y); 
+
+			//trace(pos.x, pos.y); 
 			BalloonActor.xpos = pos.x; 
 			BalloonActor.ypos = pos.y;
 

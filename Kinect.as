@@ -25,6 +25,11 @@ package
 		//custom kinect vars
 		private var xpos:Number; 
 		private var ypos:Number; 
+	
+		
+		
+		
+		
 		public var isPlayer:Boolean; 
 		
 		public function Kinect()
@@ -77,6 +82,17 @@ package
 			var element:Vector3D;
 			var hElement:Vector3D; 
 			var elementSprite:Quad;
+			var larmV3:Vector3D; 
+			var rarmV3:Vector3D; 
+			var lshoulderV3:Vector3D; 
+			var rshoulderV3:Vector3D; 
+			
+			var lshoulder:Vector; 
+			var rshoulder:Vector; 
+			
+			var larm:Vector; 
+			var rarm:Vector; 
+			
 			for each(var skeleton:AIRKinectSkeleton in _currentSkeletons)
 			{
 				//code for drawing dummy skeleton
@@ -93,14 +109,42 @@ package
 //				}			
 				//get the head joint and set the x,y for the balloon later
 				hElement = skeleton.getJointScaled(3, scaler); 
+				//what are the numbers for arms? get this 
+				larmV3 = skeleton.getJointScaled(4, scaler); 
+				rarmV3 = skeleton.getJointScaled(5, scaler); 
+				
+				//get the shoulders 
+				lshoulderV3 = skeleton.getJointScaled(7, scaler); 
+				rshoulderV3 = skeleton.getJointScaled(6, scaler); 
+		
 				xpos = Number(hElement.x);
 				ypos = Number(hElement.y); 
 				
+							
+				rshoulder.x = rshoulderV3.x;
+				rshoulder.y = rshoulderV3.y; 
+				
+				lshoulder.x = lshoulderV3.x;
+				lshoulder.y = lshoulderV3.y; 
+				
+				
+				
+				larm.x = larmV3.x;
+				larm.y = larmV3.y;  
+					
+				rarm.x = rarmV3.x; 
+				rarm.y = rarmV3.y; 
+				
+				
 				BalloonActor.xpos = xpos; 
 				BalloonActor.ypos = ypos; 
-			
 				
-				//send out the x and y to the balloon 
+				BalloonActor.lshoulder = lshoulder; 
+				BalloonActor.rshoulder = rshoulder; 
+				
+				BalloonActor.larm = larm; 
+				BalloonActor.rarm = rarm; 
+				
 				
 			}
 			

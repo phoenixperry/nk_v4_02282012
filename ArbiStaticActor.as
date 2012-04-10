@@ -16,7 +16,8 @@ package
 	import starling.display.DisplayObjectContainer;
 	import starling.display.Image;
 	import starling.display.Sprite;
-	import starling.textures.Texture;
+	import starling.textures.Texture;	
+
 	
 	public class ArbiStaticActor extends Actor 
 	{
@@ -109,7 +110,7 @@ package
 				fixtureDef.shape = polyShape;
 				fixtureDef.density = 0; 
 				fixtureDef.friction = .2; 
-				fixtureDef.restitution = 0.3; 
+				fixtureDef.restitution = 0; 
 				arbiBody.CreateFixture(fixtureDef); 
 			}
 			

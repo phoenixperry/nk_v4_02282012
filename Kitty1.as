@@ -34,7 +34,7 @@ package
 		
 		public var _Kitty1Body:b2Body; 
 		
-		[Embed(source="./assets/level1/sprites/fullSheet/sheet.png")] 
+		[Embed(source="./assets/level1/sprites/fullSheet/allSprites.png")] 
 		public var kitty1Bit:Class;  
 		
 		[Embed(source="./assets/level1/sprites/fullSheet/fullSheet.xml",  mimeType="application/octet-stream")]
@@ -45,6 +45,8 @@ package
 		//textures 
 		private var kitty1Atlas:TextureAtlas; 
 		private var kitty1Texture:Texture; 
+		
+		private var bounce:Number = 0.22;
 		
 		public function Kitty1() 
 		{
@@ -61,7 +63,7 @@ package
 			//first create the costume 
 			var kframes:Vector.<Texture> = kitty1Atlas.getTextures("kitty"); 
 			name = "kitty"; 
-			kMovie= new MovieClip(kframes,1); 
+			kMovie= new MovieClip(kframes,0); 
 			
 			Starling.juggler.add(kMovie); 
 	
@@ -72,7 +74,7 @@ package
 			
 			[
 				// density, friction, restitution
-				1, 0.1, 0,
+				1, 0.1, bounce,
 				// categoryBits, maskBits, groupIndex, isSensor
 				1, 65535, 0, false,
 				'POLYGON',
